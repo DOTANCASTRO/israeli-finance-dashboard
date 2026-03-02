@@ -283,6 +283,7 @@ export default function App() {
   const [drag, setDrag]           = useState(false);
   const [aiResponse, setAiResponse] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [apiKey, setApiKey]       = useState("");
   const [filterCat, setFilterCat] = useState("All");
   const [filterMonth, setFilterMonth] = useState("All");
   const [search, setSearch]       = useState("");
@@ -412,17 +413,23 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-6",
           max_tokens: 1000,
           messages: [{ role: "user", content: prompt }]
         })
       });
       const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
       setAiResponse(data.content?.map(b => b.text).join("") || "No response.");
     } catch (err) {
-      setAiResponse("Error fetching AI analysis.");
+      setAiResponse("Error: " + err.message);
     }
     setAiLoading(false);
   };
@@ -568,14 +575,22 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
             {/* AI Analysis */}
             <div className="ai-panel">
               <h3>AI Financial Analysis</h3>
-              {!aiResponse && !aiLoading && (
-                <p style={{ color: "#6b7280", fontSize: "0.85rem", fontFamily: "DM Mono", marginBottom: "1rem" }}>
-                  Get personalized insights powered by Claude — spending patterns, anomalies, and savings tips.
-                </p>
-              )}
+              <div style={{ marginBottom: "1rem" }}>
+                <label style={{ display: "block", fontFamily: "'DM Mono', monospace", fontSize: "0.72rem", color: "var(--muted)", marginBottom: "0.4rem", letterSpacing: "0.08em" }}>
+                  ANTHROPIC API KEY — stored in browser memory only, never sent anywhere except Anthropic
+                </label>
+                <input
+                  type="password"
+                  placeholder="sk-ant-..."
+                  value={apiKey}
+                  onChange={e => setApiKey(e.target.value)}
+                  style={{ width: "100%", background: "var(--surface2)", border: "1px solid var(--border)", color: "var(--text)", padding: "0.5rem 0.75rem", borderRadius: 6, fontFamily: "'DM Mono', monospace", fontSize: "0.82rem" }}
+                />
+              </div>
+              {!apiKey && <p style={{ color: "var(--muted)", fontSize: "0.8rem", fontFamily: "'DM Mono', monospace", marginBottom: "0.75rem" }}>Get a free key at console.anthropic.com</p>}
               {aiLoading && <div className="ai-loading"><div className="pulse" /> Analyzing your transactions...</div>}
               {aiResponse && <div className="ai-response">{aiResponse}</div>}
-              <button className="analyze-btn" onClick={runAI} disabled={aiLoading}>
+              <button className="analyze-btn" onClick={runAI} disabled={aiLoading || !apiKey}>
                 {aiLoading ? "Analyzing..." : aiResponse ? "Re-analyze" : "✦ Analyze with AI"}
               </button>
             </div>
