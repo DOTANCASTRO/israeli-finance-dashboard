@@ -446,6 +446,22 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
           <span className="sub">Israeli Bank Transaction Analyzer</span>
         </div>
 
+        {transactions.length > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+            {fileNames.map(n => (
+              <span key={n} style={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", padding: "0.2rem 0.6rem", borderRadius: 4, fontFamily: "DM Mono", fontSize: "0.72rem", color: "#9ca3af" }}>{n}</span>
+            ))}
+            <label style={{ background: "none", border: "1px solid rgba(0,229,195,0.3)", color: "#00e5c3", padding: "0.35rem 0.8rem", borderRadius: 6, cursor: "pointer", fontFamily: "DM Mono", fontSize: "0.78rem", position: "relative" }}>
+              + Add more files
+              <input type="file" accept=".csv,.xlsx,.xls" multiple onChange={onFileInput} style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer", width: "100%", height: "100%" }} />
+            </label>
+            <button onClick={() => { setTransactions([]); setAiResponse(""); setFileNames([]); setFilterMonth("All"); setFilterCat("All"); setSearch(""); }}
+              style={{ marginLeft: "auto", background: "none", border: "1px solid rgba(255,107,107,0.3)", color: "#ff6b6b", padding: "0.35rem 0.8rem", borderRadius: 6, cursor: "pointer", fontFamily: "DM Mono", fontSize: "0.78rem" }}>
+              ↺ Reset
+            </button>
+          </div>
+        )}
+
         {transactions.length === 0 ? (
           <div
             className={`dropzone ${drag ? "drag" : ""}`}
@@ -595,22 +611,6 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
               </button>
             </div>
 
-            <div style={{ marginTop: "1rem", display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-              <span style={{ fontFamily: "DM Mono", fontSize: "0.75rem", color: "#6b7280" }}>
-                {fileNames.length} file{fileNames.length !== 1 ? "s" : ""} loaded:
-              </span>
-              {fileNames.map(n => (
-                <span key={n} style={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", padding: "0.2rem 0.6rem", borderRadius: 4, fontFamily: "DM Mono", fontSize: "0.72rem", color: "#9ca3af" }}>{n}</span>
-              ))}
-              <label style={{ marginLeft: "auto", background: "none", border: "1px solid rgba(0,229,195,0.3)", color: "#00e5c3", padding: "0.4rem 0.9rem", borderRadius: 6, cursor: "pointer", fontFamily: "DM Mono", fontSize: "0.8rem", position: "relative" }}>
-                + Add more files
-                <input type="file" accept=".csv,.xlsx,.xls" multiple onChange={onFileInput} style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer", width: "100%", height: "100%" }} />
-              </label>
-              <button onClick={() => { setTransactions([]); setAiResponse(""); setFileNames([]); setFilterMonth("All"); setFilterCat("All"); setSearch(""); }}
-                style={{ background: "none", border: "1px solid rgba(255,255,255,0.1)", color: "#6b7280", padding: "0.4rem 0.9rem", borderRadius: 6, cursor: "pointer", fontFamily: "DM Mono", fontSize: "0.8rem" }}>
-                ← Clear all
-              </button>
-            </div>
           </>
         )}
         {error && <div className="error">{error}</div>}
