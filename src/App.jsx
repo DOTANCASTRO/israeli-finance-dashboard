@@ -383,7 +383,7 @@ export default function App() {
   const topMerchants = useMemo(() => {
     const map = {};
     filtered.forEach(t => { map[t.description] = (map[t.description]||0) + t.amount; });
-    return Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([name,amount])=>({name,amount:Math.round(amount)}));
+    return Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([name,amount])=>({name,amount:Math.round(amount),exact:+amount.toFixed(2)}));
   }, [filtered]);
 
   // ── AI Analysis ───────────────────────────────────────────────────────────
@@ -550,7 +550,16 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
                   <XAxis type="number" tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "DM Mono" }} tickFormatter={v=>`₪${(v/1000).toFixed(1)}k`} />
                   <YAxis type="category" dataKey="name" width={140} tick={{ fill: "#e8eaf0", fontSize: 11, fontFamily: "DM Mono" }} />
-                  <Tooltip contentStyle={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, fontFamily: "DM Mono", fontSize: 12 }} formatter={v => [`₪${v.toLocaleString()}`, "Total"]} />
+                  <Tooltip content={({ active, payload }) => {
+                    if (!active || !payload?.length) return null;
+                    const { name, exact } = payload[0].payload;
+                    return (
+                      <div style={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, fontFamily: "DM Mono", fontSize: 12, padding: "0.5rem 0.75rem" }}>
+                        <p style={{ color: "#9ca3af", marginBottom: "0.25rem", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{name}</p>
+                        <p style={{ color: "#00e5c3" }}>₪{exact.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                      </div>
+                    );
+                  }} />
                   <Bar dataKey="amount" radius={[0,4,4,0]}>
                     {topMerchants.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                   </Bar>
