@@ -88,9 +88,17 @@ const css = `
   .tx-table th { text-align: left; padding: 0.5rem 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); font-weight: 400; }
   .tx-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
   .tx-table tr:hover td { background: rgba(255,255,255,0.02); }
-  .tx-table .amount { font-family: 'DM Mono', monospace; font-weight: 500; }
+  .tx-table .amount { font-family: 'DM Mono', monospace; font-weight: 500; position: relative; cursor: default; }
   .tx-table .amount.debit { color: var(--accent2); }
   .tx-table .amount.credit { color: var(--accent); }
+  .tx-table .amount .tip {
+    display: none; position: absolute; bottom: calc(100% + 6px); right: 0;
+    background: #1e2330; border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text); font-size: 0.75rem; padding: 0.25rem 0.5rem;
+    border-radius: 5px; white-space: nowrap; pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10;
+  }
+  .tx-table .amount:hover .tip { display: block; }
   .cat-badge {
     display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
     font-size: 0.7rem; font-family: 'DM Mono', monospace;
@@ -580,7 +588,7 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
                         <td style={{ fontFamily: "DM Mono", fontSize: "0.8rem", color: "#6b7280" }}>{t.dateStr}</td>
                         <td>{t.description}</td>
                         <td><span className="cat-badge">{t.category}</span></td>
-                        <td><span className={`amount ${t.isCredit ? "credit" : "debit"}`} title={`₪${t.amount.toFixed(2)}`}>{t.isCredit ? "+" : "-"}{fmt(t.amount)}</span></td>
+                        <td><span className={`amount ${t.isCredit ? "credit" : "debit"}`}>{t.isCredit ? "+" : "-"}{fmt(t.amount)}<span className="tip">₪{t.amount.toFixed(2)}</span></span></td>
                       </tr>
                     ))}
                   </tbody>
