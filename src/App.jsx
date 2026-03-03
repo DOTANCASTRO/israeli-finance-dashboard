@@ -580,7 +580,7 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
                         <td style={{ fontFamily: "DM Mono", fontSize: "0.8rem", color: "#6b7280" }}>{t.dateStr}</td>
                         <td>{t.description}</td>
                         <td><span className="cat-badge">{t.category}</span></td>
-                        <td><span className={`amount ${t.isCredit ? "credit" : "debit"}`}>{t.isCredit ? "+" : "-"}{fmt(t.amount)}</span></td>
+                        <td><span className={`amount ${t.isCredit ? "credit" : "debit"}`} title={`₪${t.amount.toFixed(2)}`}>{t.isCredit ? "+" : "-"}{fmt(t.amount)}</span></td>
                       </tr>
                     ))}
                   </tbody>
