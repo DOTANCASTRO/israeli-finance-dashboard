@@ -7,24 +7,24 @@ import {
 
 // ─── Styles ─────────────────────────────────────────────────────────────────
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0a0c10;
-    --surface: #111419;
-    --surface2: #181c24;
-    --border: rgba(255,255,255,0.07);
-    --accent: #00e5c3;
-    --accent2: #ff6b6b;
-    --accent3: #ffd93d;
-    --text: #e8eaf0;
-    --muted: #6b7280;
-    --card-glow: 0 0 0 1px rgba(0,229,195,0.08), 0 4px 24px rgba(0,0,0,0.4);
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --surface2: #e8edf3;
+    --border: rgba(0,0,0,0.08);
+    --accent: #3b9ee8;
+    --accent2: #e5534b;
+    --accent3: #c8860a;
+    --text: #1e2a3a;
+    --muted: #6b7a8d;
+    --card-glow: 0 0 0 1px rgba(59,158,232,0.1), 0 2px 12px rgba(0,0,0,0.07);
   }
 
-  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; }
+  body { background: var(--bg); color: var(--text); font-family: 'Assistant', sans-serif; min-height: 100vh; direction: rtl; }
 
   .app { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
 
@@ -34,29 +34,29 @@ const css = `
   }
   .header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; }
   .header h1 span { color: var(--accent); }
-  .header .sub { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+  .header .sub { font-family: 'Assistant', monospace; font-size: 0.75rem; color: var(--muted); margin-inline-start: auto; }
 
   /* Drop zone */
   .dropzone {
-    border: 2px dashed rgba(0,229,195,0.3);
+    border: 2px dashed rgba(59,158,232,0.35);
     border-radius: 16px;
     padding: 3rem 2rem;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s;
-    background: linear-gradient(135deg, rgba(0,229,195,0.03), transparent);
+    background: linear-gradient(135deg, rgba(59,158,232,0.04), transparent);
     position: relative;
   }
-  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: rgba(0,229,195,0.05); }
+  .dropzone:hover, .dropzone.drag { border-color: var(--accent); background: rgba(59,158,232,0.07); }
   .dropzone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
   .dropzone .icon { font-size: 3rem; margin-bottom: 1rem; }
   .dropzone h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .dropzone p { color: var(--muted); font-size: 0.9rem; font-family: 'DM Mono', monospace; }
+  .dropzone p { color: var(--muted); font-size: 0.9rem; font-family: 'Assistant', monospace; }
   .banks-hint { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
   .bank-pill {
     background: var(--surface2); border: 1px solid var(--border);
     padding: 0.25rem 0.75rem; border-radius: 999px;
-    font-size: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; color: var(--muted); font-family: 'Assistant', monospace;
   }
 
   /* Stats row */
@@ -65,7 +65,7 @@ const css = `
     background: var(--surface); border-radius: 12px; padding: 1.25rem;
     box-shadow: var(--card-glow); border: 1px solid var(--border);
   }
-  .stat-card .label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .stat-card .label { font-family: 'Assistant', monospace; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
   .stat-card .value { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; }
   .stat-card .value.red { color: var(--accent2); }
   .stat-card .value.green { color: var(--accent); }
@@ -81,59 +81,60 @@ const css = `
     background: var(--surface); border-radius: 12px; padding: 1.5rem;
     box-shadow: var(--card-glow); border: 1px solid var(--border);
   }
-  .panel h3 { font-size: 0.8rem; font-family: 'DM Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; }
+  .panel h3 { font-size: 0.8rem; font-family: 'Assistant', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; }
 
   /* Transactions table */
   .tx-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  .tx-table th { text-align: left; padding: 0.5rem 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); font-weight: 400; }
-  .tx-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
-  .tx-table tr:hover td { background: rgba(255,255,255,0.02); }
-  .tx-table .amount { font-family: 'DM Mono', monospace; font-weight: 500; position: relative; cursor: default; }
+  .tx-table th { text-align: right; padding: 0.5rem 0.75rem; color: var(--muted); font-family: 'Assistant', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .tx-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .tx-table tr:hover td { background: rgba(0,0,0,0.02); }
+  .tx-table .amount { font-family: 'Assistant', monospace; font-weight: 500; position: relative; cursor: default; }
   .tx-table .amount.debit { color: var(--accent2); }
   .tx-table .amount.credit { color: var(--accent); }
   .tx-table .amount .tip {
-    display: none; position: absolute; bottom: calc(100% + 6px); right: 0;
-    background: #1e2330; border: 1px solid rgba(255,255,255,0.12);
+    display: none; position: absolute; bottom: calc(100% + 6px); left: 0;
+    background: var(--surface); border: 1px solid var(--border);
     color: var(--text); font-size: 0.75rem; padding: 0.25rem 0.5rem;
     border-radius: 5px; white-space: nowrap; pointer-events: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12); z-index: 10;
   }
   .tx-table .amount:hover .tip { display: block; }
   .cat-badge {
     display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
-    font-size: 0.7rem; font-family: 'DM Mono', monospace;
-    background: rgba(255,255,255,0.06); color: var(--muted);
+    font-size: 0.7rem; font-family: 'Assistant', monospace;
+    background: var(--surface2); color: var(--muted);
   }
 
   /* AI panel */
   .ai-panel {
-    background: linear-gradient(135deg, rgba(0,229,195,0.06), rgba(255,107,107,0.04));
-    border: 1px solid rgba(0,229,195,0.2); border-radius: 12px; padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(59,158,232,0.07), rgba(229,83,75,0.04));
+    border: 1px solid rgba(59,158,232,0.25); border-radius: 12px; padding: 1.5rem;
     margin-top: 1rem;
   }
-  .ai-panel h3 { font-size: 0.8rem; font-family: 'DM Mono', monospace; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .ai-panel h3 { font-size: 0.8rem; font-family: 'Assistant', monospace; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
   .ai-panel h3::before { content: '◆'; font-size: 0.6rem; }
   .ai-response { white-space: pre-wrap; line-height: 1.7; font-size: 0.9rem; color: var(--text); }
-  .ai-loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.85rem; }
+  .ai-loading { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-family: 'Assistant', monospace; font-size: 0.85rem; }
   .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   .analyze-btn {
     margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--accent);
-    color: #0a0c10; border: none; border-radius: 8px; font-family: 'Syne', sans-serif;
+    color: #ffffff; border: none; border-radius: 8px; font-family: 'Assistant', sans-serif;
     font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s;
   }
   .analyze-btn:hover { opacity: 0.85; }
   .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
   /* Error */
-  .error { background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); color: var(--accent2); padding: 1rem 1.25rem; border-radius: 8px; font-size: 0.85rem; margin-top: 1rem; font-family: 'DM Mono', monospace; }
+  .error { background: rgba(229,83,75,0.08); border: 1px solid rgba(229,83,75,0.25); color: var(--accent2); padding: 1rem 1.25rem; border-radius: 8px; font-size: 0.85rem; margin-top: 1rem; font-family: 'Assistant', monospace; }
 
   .filter-row { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
-  .filter-row label { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+  .filter-row label { font-family: 'Assistant', monospace; font-size: 0.75rem; color: var(--muted); }
   .filter-row select, .filter-row input {
     background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-    padding: 0.4rem 0.75rem; border-radius: 6px; font-family: 'DM Mono', monospace; font-size: 0.8rem;
+    padding: 0.4rem 0.75rem; border-radius: 6px; font-family: 'Assistant', monospace; font-size: 0.8rem;
+    direction: rtl;
   }
   .scroll-table { max-height: 380px; overflow-y: auto; }
   .scroll-table::-webkit-scrollbar { width: 4px; }
@@ -141,71 +142,66 @@ const css = `
 `;
 
 // ─── Category detection ──────────────────────────────────────────────────────
-// Map Diners/Israeli bank "ענף" (sector) values to emoji categories
 const SECTOR_MAP = {
-  "מסעדות": "🍔 Food & Dining",
-  "מזון ומשקאות": "🍔 Food & Dining",
-  "מזון מהיר": "🍔 Food & Dining",
-  "מזון": "🍔 Food & Dining",
-  "קפה ובתי קפה": "🍔 Food & Dining",
-  "סופרמרקט": "🛒 Groceries",
-  "מכולת וסופרמרקט": "🛒 Groceries",
-  "אנרגיה": "⛽ Transport & Gas",
-  "תחבורה": "⛽ Transport & Gas",
-  "חניה": "⛽ Transport & Gas",
-  "בריאות": "🏥 Health & Pharmacy",
-  "רפואה": "🏥 Health & Pharmacy",
-  "בית מרקחת": "🏥 Health & Pharmacy",
-  "אופנה": "🛍️ Shopping",
-  "קניות": "🛍️ Shopping",
-  "ריהוט ובית": "🏠 Home & Living",
-  "ריהוט": "🏠 Home & Living",
-  "תקשורת ומחשבים": "📡 Subscriptions",
-  "תקשורת": "📡 Subscriptions",
-  "ספורט": "🏋️ Sport & Wellness",
-  "טיפוח ויופי": "🏋️ Sport & Wellness",
-  "נסיעות": "✈️ Travel",
-  "תיירות": "✈️ Travel",
-  "פנאי בילוי": "🎭 Entertainment",
-  "בידור": "🎭 Entertainment",
-  "ביטוח ופיננסים": "💰 Finance",
-  "בנקים ופיננסים": "💰 Finance",
-  "חינוך": "📚 Education",
-  "ציוד ומשרד": "📦 Other",
+  "מסעדות": "🍔 אוכל ומסעדות",
+  "מזון ומשקאות": "🍔 אוכל ומסעדות",
+  "מזון מהיר": "🍔 אוכל ומסעדות",
+  "מזון": "🍔 אוכל ומסעדות",
+  "קפה ובתי קפה": "🍔 אוכל ומסעדות",
+  "סופרמרקט": "🛒 סופרמרקט",
+  "מכולת וסופרמרקט": "🛒 סופרמרקט",
+  "אנרגיה": "⛽ תחבורה ודלק",
+  "תחבורה": "⛽ תחבורה ודלק",
+  "חניה": "⛽ תחבורה ודלק",
+  "בריאות": "🏥 בריאות ורוקחות",
+  "רפואה": "🏥 בריאות ורוקחות",
+  "בית מרקחת": "🏥 בריאות ורוקחות",
+  "אופנה": "🛍️ קניות",
+  "קניות": "🛍️ קניות",
+  "ריהוט ובית": "🏠 בית ומחיה",
+  "ריהוט": "🏠 בית ומחיה",
+  "תקשורת ומחשבים": "📡 מנויים",
+  "תקשורת": "📡 מנויים",
+  "ספורט": "🏋️ ספורט ובריאות",
+  "טיפוח ויופי": "🏋️ ספורט ובריאות",
+  "נסיעות": "✈️ נסיעות",
+  "תיירות": "✈️ נסיעות",
+  "פנאי בילוי": "🎭 בידור",
+  "בידור": "🎭 בידור",
+  "ביטוח ופיננסים": "💰 פיננסים",
+  "בנקים ופיננסים": "💰 פיננסים",
+  "חינוך": "📚 חינוך",
+  "ציוד ומשרד": "📦 אחר",
 };
 
 const CATEGORY_RULES = [
-  { cat: "🍔 Food & Dining", keywords: ["מסעדה","קפה","אוכל","פיצה","סושי","בורגר","שוקולד","מאפה","קפיטריה","coffee","restaurant","food","cafe","מקדונלד","שופרסל קפה","גוד פוד"] },
-  { cat: "🛒 Groceries", keywords: ["שופרסל","רמי לוי","ויקטורי","מגה","יוחננוף","חצי חינם","סופר","supermarket","super","grocery","מעדנייה"] },
-  { cat: "⛽ Transport & Gas", keywords: ["דלק","פז","סונול","yellow","גז","תחנת","רכב","parking","חניה","רכבת","אוטובוס","uber","taxi","gett"] },
-  { cat: "🏥 Health & Pharmacy", keywords: ["פארם","בית מרקחת","pharmacy","רופא","doctor","מרפאה","clalit","כללית","מכבי","leumit","ליאומית"] },
-  { cat: "🛍️ Shopping", keywords: ["עלמה","זארה","h&m","ksp","office","adidas","nike","castro","renuar","golf","shopping","mall","סנטר"] },
-  { cat: "🏠 Home & Living", keywords: ["ikea","אייקאה","home","הום","שיפוצים","חשמל","מים","גז","ארנונה","וילון","ריהוט"] },
-  { cat: "📡 Subscriptions", keywords: ["netflix","spotify","apple","google","youtube","microsoft","amazon","yes","hot","cellular","סלולר","פרטנר","סלקום","פלאפון"] },
-  { cat: "🏋️ Sport & Wellness", keywords: ["gym","חדר כושר","sport","ספורט","yoga","pilates","swim"] },
-  { cat: "✈️ Travel", keywords: ["flight","hotel","airbnb","booking","אל על","elal","airport","נמל תעופה","אירופה"] },
-  { cat: "🎭 Entertainment", keywords: ["cinema","סרט","קולנוע","theater","concert","event","אירוע","בילוי"] },
+  { cat: "🍔 אוכל ומסעדות", keywords: ["מסעדה","קפה","אוכל","פיצה","סושי","בורגר","שוקולד","מאפה","קפיטריה","coffee","restaurant","food","cafe","מקדונלד","שופרסל קפה","גוד פוד"] },
+  { cat: "🛒 סופרמרקט", keywords: ["שופרסל","רמי לוי","ויקטורי","מגה","יוחננוף","חצי חינם","סופר","supermarket","super","grocery","מעדנייה"] },
+  { cat: "⛽ תחבורה ודלק", keywords: ["דלק","פז","סונול","yellow","גז","תחנת","רכב","parking","חניה","רכבת","אוטובוס","uber","taxi","gett"] },
+  { cat: "🏥 בריאות ורוקחות", keywords: ["פארם","בית מרקחת","pharmacy","רופא","doctor","מרפאה","clalit","כללית","מכבי","leumit","ליאומית"] },
+  { cat: "🛍️ קניות", keywords: ["עלמה","זארה","h&m","ksp","office","adidas","nike","castro","renuar","golf","shopping","mall","סנטר"] },
+  { cat: "🏠 בית ומחיה", keywords: ["ikea","אייקאה","home","הום","שיפוצים","חשמל","מים","גז","ארנונה","וילון","ריהוט"] },
+  { cat: "📡 מנויים", keywords: ["netflix","spotify","apple","google","youtube","microsoft","amazon","yes","hot","cellular","סלולר","פרטנר","סלקום","פלאפון"] },
+  { cat: "🏋️ ספורט ובריאות", keywords: ["gym","חדר כושר","sport","ספורט","yoga","pilates","swim"] },
+  { cat: "✈️ נסיעות", keywords: ["flight","hotel","airbnb","booking","אל על","elal","airport","נמל תעופה","אירופה"] },
+  { cat: "🎭 בידור", keywords: ["cinema","סרט","קולנוע","theater","concert","event","אירוע","בילוי"] },
 ];
 
 function categorize(description, sector) {
-  // Prefer the bank's own sector classification
   if (sector) {
     const mapped = SECTOR_MAP[sector.trim()];
     if (mapped) return mapped;
   }
-  // Fallback: keyword match on description
-  if (!description) return "📦 Other";
+  if (!description) return "📦 אחר";
   const lower = description.toLowerCase();
   for (const { cat, keywords } of CATEGORY_RULES) {
     if (keywords.some(k => lower.includes(k.toLowerCase()))) return cat;
   }
-  return "📦 Other";
+  return "📦 אחר";
 }
 
 // ─── CSV/Excel parsing ───────────────────────────────────────────────────────
 function detectAndParse(data) {
-  // Find header row. Use terms that only appear as column labels, not in title/summary rows.
-  // e.g. "עסקאות לחיוב ב-..." contains "חיוב" but not "תאריך" or "שם בית".
   const strictHeaderTerms = ["תאריך", "שם בית", "transaction date", "date"];
   let headerRow = -1;
   for (let i = 0; i < Math.min(15, data.length); i++) {
@@ -220,8 +216,6 @@ function detectAndParse(data) {
   const headers = data[headerRow].map(h => String(h || "").trim());
   const rows = data.slice(headerRow + 1);
 
-  // Find column by trying terms in priority order — first matching term wins.
-  // This prevents a later term matching an earlier column.
   const findCol = (...terms) => {
     for (const term of terms) {
       const idx = headers.findIndex(h => h.toLowerCase().includes(term.toLowerCase()));
@@ -231,20 +225,17 @@ function detectAndParse(data) {
   };
 
   const dateIdx    = findCol("תאריך", "date");
-  // "שם בית" before "עסקה" — avoids matching "תאריך עסקה" as the description column
   const descIdx    = findCol("שם בית", "תיאור", "description", "פעולה", "merchant", "בית עסק");
-  // "חיוב" finds "סכום חיוב" (ILS charged amount) before "סכום עסקה" (original-currency amount)
   const chargeIdx  = findCol("חיוב", "amount", "זיכוי וחיוב");
-  const txAmtIdx   = findCol("סכום", "amount");   // fallback when charge column is empty
+  const txAmtIdx   = findCol("סכום", "amount");
   const typeIdx    = findCol("סוג", "type", "זיכוי");
-  const sectorIdx  = findCol("ענף");              // Diners/Israeli banks provide a sector column
+  const sectorIdx  = findCol("ענף");
 
   const txs = [];
   for (const row of rows) {
     if (!row || row.every(c => !c)) continue;
     const rawDate   = row[dateIdx];
     const rawDesc   = row[descIdx];
-    // Use charged ILS amount; fall back to transaction amount if empty (e.g. in-flight transactions)
     const rawCharge = chargeIdx !== -1 ? row[chargeIdx] : undefined;
     const rawTxAmt  = txAmtIdx  !== -1 ? row[txAmtIdx]  : undefined;
     const rawAmt    = (rawCharge !== "" && rawCharge != null) ? rawCharge : rawTxAmt;
@@ -256,7 +247,6 @@ function detectAndParse(data) {
     const isCredit = amount < 0 || String(row[typeIdx] || "").includes("זיכוי");
     amount = Math.abs(amount);
 
-    // Parse date
     let date = rawDate ? new Date(rawDate) : null;
     if (!date || isNaN(date)) {
       const parts = String(rawDate || "").split(/[\/\-\.]/);
@@ -281,8 +271,8 @@ function detectAndParse(data) {
   return txs.filter(t => t.amount > 0 || t.description);
 }
 
-// ─── Chart colors ────────────────────────────────────────────────────────────
-const COLORS = ["#00e5c3","#ff6b6b","#ffd93d","#a78bfa","#34d399","#fb923c","#60a5fa","#f472b6","#a3e635","#e879f9"];
+// ─── Chart colors (lighter, pastel-toned) ───────────────────────────────────
+const COLORS = ["#3b9ee8","#e5534b","#c8860a","#7c6af7","#2db87d","#f07b30","#00a991","#e0609c","#7fba2c","#c55fd4"];
 
 // ─── Main App ────────────────────────────────────────────────────────────────
 export default function App() {
@@ -292,13 +282,13 @@ export default function App() {
   const [aiResponse, setAiResponse] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [apiKey, setApiKey]       = useState("");
-  const [filterCat, setFilterCat] = useState("All");
-  const [filterMonth, setFilterMonth] = useState("All");
+  const [filterCat, setFilterCat] = useState("הכל");
+  const [filterMonth, setFilterMonth] = useState("הכל");
   const [search, setSearch]       = useState("");
   const [fileNames, setFileNames] = useState([]);
 
   const processFile = useCallback((file, existingNames) => {
-    if (existingNames.includes(file.name)) return; // skip duplicates
+    if (existingNames.includes(file.name)) return;
     setError("");
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -307,7 +297,7 @@ export default function App() {
         const ws = wb.Sheets[wb.SheetNames[0]];
         const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
         const txs = detectAndParse(data);
-        if (txs.length === 0) throw new Error(`No transactions detected in ${file.name}.`);
+        if (txs.length === 0) throw new Error(`לא נמצאו עסקאות בקובץ ${file.name}.`);
         setTransactions(prev => [...prev, ...txs]);
         setFileNames(prev => [...prev, file.name]);
         setAiResponse("");
@@ -340,17 +330,17 @@ export default function App() {
     transactions.forEach(t => {
       if (t.date) set.add(`${t.date.getFullYear()}-${String(t.date.getMonth()+1).padStart(2,"0")}`);
     });
-    return ["All", ...Array.from(set).sort().reverse()];
+    return ["הכל", ...Array.from(set).sort().reverse()];
   }, [transactions]);
 
   const categories = useMemo(() => {
     const set = new Set(transactions.map(t => t.category));
-    return ["All", ...Array.from(set).sort()];
+    return ["הכל", ...Array.from(set).sort()];
   }, [transactions]);
 
   const filtered = useMemo(() => transactions.filter(t => {
-    const matchCat   = filterCat === "All" || t.category === filterCat;
-    const matchMonth = filterMonth === "All" || (t.date && `${t.date.getFullYear()}-${String(t.date.getMonth()+1).padStart(2,"0")}` === filterMonth);
+    const matchCat   = filterCat === "הכל" || t.category === filterCat;
+    const matchMonth = filterMonth === "הכל" || (t.date && `${t.date.getFullYear()}-${String(t.date.getMonth()+1).padStart(2,"0")}` === filterMonth);
     const matchSearch = !search || t.description.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchMonth && matchSearch && !t.isCredit;
   }), [transactions, filterCat, filterMonth, search]);
@@ -358,7 +348,7 @@ export default function App() {
   const totalSpend  = useMemo(() => filtered.reduce((s, t) => s + t.amount, 0), [filtered]);
   const totalCredit = useMemo(() => transactions.filter(t => {
     if (!t.isCredit) return false;
-    if (filterMonth === "All") return true;
+    if (filterMonth === "הכל") return true;
     return t.date && `${t.date.getFullYear()}-${String(t.date.getMonth()+1).padStart(2,"0")}` === filterMonth;
   }).reduce((s,t)=>s+t.amount,0), [transactions, filterMonth]);
   const txCount     = filtered.length;
@@ -396,27 +386,27 @@ export default function App() {
       topMerchants: topMerchants.slice(0,5),
       monthlyTrend: byMonth,
     };
-    const prompt = `You are a personal finance advisor analyzing Israeli credit card transactions.
+    const prompt = `אתה יועץ פיננסי אישי המנתח עסקאות כרטיס אשראי ישראלי. ענה בעברית.
 
-Here's a summary of the data:
-Total spending: ₪${summary.totalSpend}
-Number of transactions: ${summary.txCount}
+להלן סיכום הנתונים:
+סה"כ הוצאות: ₪${summary.totalSpend}
+מספר עסקאות: ${summary.txCount}
 
-Top spending categories:
+קטגוריות הוצאה מובילות:
 ${summary.topCategories.map(c=>`- ${c.cat}: ₪${c.amount}`).join("\n")}
 
-Top merchants:
+בתי עסק מובילים:
 ${summary.topMerchants.map(m=>`- ${m.name}: ₪${m.amount}`).join("\n")}
 
-Monthly trend:
+מגמה חודשית:
 ${summary.monthlyTrend.map(m=>`- ${m.month}: ₪${m.amount}`).join("\n")}
 
-Please provide:
-1. 2-3 key observations about spending patterns
-2. 1-2 concrete money-saving suggestions
-3. Any unusual patterns worth flagging
+אנא ספק:
+1. 2-3 תצפיות מרכזיות על דפוסי ההוצאות
+2. 1-2 הצעות ממשיות לחיסכון כסף
+3. דפוסים חריגים הראויים לציון
 
-Be concise, friendly, and specific. Use ₪ for amounts.`;
+היה תמציתי, ידידותי וספציפי. השתמש ב-₪ לסכומים.`;
 
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -435,9 +425,9 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
-      setAiResponse(data.content?.map(b => b.text).join("") || "No response.");
+      setAiResponse(data.content?.map(b => b.text).join("") || "אין תגובה.");
     } catch (err) {
-      setAiResponse("Error: " + err.message);
+      setAiResponse("שגיאה: " + err.message);
     }
     setAiLoading(false);
   };
@@ -451,21 +441,21 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
       <div className="app">
         <div className="header">
           <h1>Finance<span>Lens</span></h1>
-          <span className="sub">Israeli Bank Transaction Analyzer</span>
+          <span className="sub">Castro Lab</span>
         </div>
 
         {transactions.length > 0 && (
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
             {fileNames.map(n => (
-              <span key={n} style={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", padding: "0.2rem 0.6rem", borderRadius: 4, fontFamily: "DM Mono", fontSize: "0.72rem", color: "#9ca3af" }}>{n}</span>
+              <span key={n} style={{ background: "var(--surface2)", border: "1px solid var(--border)", padding: "0.2rem 0.6rem", borderRadius: 4, fontFamily: "Assistant", fontSize: "0.72rem", color: "var(--muted)" }}>{n}</span>
             ))}
-            <label style={{ background: "none", border: "1px solid rgba(0,229,195,0.3)", color: "#00e5c3", padding: "0.35rem 0.8rem", borderRadius: 6, cursor: "pointer", fontFamily: "DM Mono", fontSize: "0.78rem", position: "relative" }}>
-              + Add more files
+            <label style={{ background: "none", border: "1px solid rgba(59,158,232,0.35)", color: "var(--accent)", padding: "0.35rem 0.8rem", borderRadius: 6, cursor: "pointer", fontFamily: "Assistant", fontSize: "0.78rem", position: "relative" }}>
+              + הוסף קבצים נוספים
               <input type="file" accept=".csv,.xlsx,.xls" multiple onChange={onFileInput} style={{ position: "absolute", inset: 0, opacity: 0, cursor: "pointer", width: "100%", height: "100%" }} />
             </label>
-            <button onClick={() => { setTransactions([]); setAiResponse(""); setFileNames([]); setFilterMonth("All"); setFilterCat("All"); setSearch(""); }}
-              style={{ marginLeft: "auto", background: "none", border: "1px solid rgba(255,107,107,0.3)", color: "#ff6b6b", padding: "0.35rem 0.8rem", borderRadius: 6, cursor: "pointer", fontFamily: "DM Mono", fontSize: "0.78rem" }}>
-              ↺ Reset
+            <button onClick={() => { setTransactions([]); setAiResponse(""); setFileNames([]); setFilterMonth("הכל"); setFilterCat("הכל"); setSearch(""); }}
+              style={{ marginInlineStart: "auto", background: "none", border: "1px solid rgba(229,83,75,0.3)", color: "var(--accent2)", padding: "0.35rem 0.8rem", borderRadius: 6, cursor: "pointer", fontFamily: "Assistant", fontSize: "0.78rem" }}>
+              ↺ איפוס
             </button>
           </div>
         )}
@@ -477,12 +467,12 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
             onDragLeave={() => setDrag(false)}
             onDrop={onDrop}
           >
-            <input type="file" accept=".csv,.xlsx,.xls" multiple onChange={onFileInput} />
+            <input type="file" accept=".csv,.xlsx,.xls" multiple onChange={onFileInput} onDrop={e => e.stopPropagation()} />
             <div className="icon">📂</div>
-            <h2>Drop your bank export here</h2>
-            <p>CSV or Excel file from your bank • Nothing is sent to any server</p>
+            <h2>העלה לכאן את קובץ ההוצאות</h2>
+            <p>קובץ CSV או Excel מהבנק • לא נשלח דבר לשרת</p>
             <div className="banks-hint">
-              {["Isracard","Max","Cal","Hapoalim","Leumi","Discount","Mizrahi"].map(b => (
+              {["ישראכרט","מקס","כאל","הפועלים","לאומי","דיסקונט","מזרחי"].map(b => (
                 <span key={b} className="bank-pill">{b}</span>
               ))}
             </div>
@@ -492,23 +482,23 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
             {/* Stats */}
             <div className="stats">
               <div className="stat-card">
-                <div className="label">Total Spend</div>
+                <div className="label">סה״כ הוצאות</div>
                 <div className="value red">{fmt(totalSpend)}</div>
               </div>
               <div className="stat-card">
-                <div className="label">Transactions</div>
+                <div className="label">עסקאות</div>
                 <div className="value yellow">{txCount}</div>
               </div>
               <div className="stat-card">
-                <div className="label">Avg Transaction</div>
+                <div className="label">ממוצע לעסקה</div>
                 <div className="value">{fmt(avgTx)}</div>
               </div>
               <div className="stat-card">
-                <div className="label">Credits / Refunds</div>
+                <div className="label">זיכויים / החזרים</div>
                 <div className="value green">{fmt(totalCredit)}</div>
               </div>
               <div className="stat-card">
-                <div className="label">Categories</div>
+                <div className="label">קטגוריות</div>
                 <div className="value">{byCategory.length}</div>
               </div>
             </div>
@@ -516,27 +506,27 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
             {/* Charts row 1 */}
             <div className="grid2">
               <div className="panel">
-                <h3>Monthly Spending</h3>
+                <h3>הוצאות חודשיות</h3>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={byMonth} barSize={28}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "DM Mono" }} />
-                    <YAxis tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "DM Mono" }} tickFormatter={v=>`₪${(v/1000).toFixed(0)}k`} />
-                    <Tooltip contentStyle={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, fontFamily: "DM Mono", fontSize: 12 }} formatter={v => [`₪${v.toLocaleString()}`, "Spend"]} />
-                    <Bar dataKey="amount" fill="#00e5c3" radius={[4,4,0,0]} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                    <XAxis dataKey="month" tick={{ fill: "#6b7a8d", fontSize: 11, fontFamily: "Assistant" }} />
+                    <YAxis tick={{ fill: "#6b7a8d", fontSize: 11, fontFamily: "Assistant" }} tickFormatter={v=>`₪${(v/1000).toFixed(0)}k`} />
+                    <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 8, fontFamily: "Assistant", fontSize: 12 }} formatter={v => [`₪${v.toLocaleString()}`, "הוצאה"]} />
+                    <Bar dataKey="amount" fill="#3b9ee8" radius={[4,4,0,0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
               <div className="panel">
-                <h3>Spending by Category</h3>
+                <h3>הוצאות לפי קטגוריה</h3>
                 <ResponsiveContainer width="100%" height={220}>
                   <PieChart>
                     <Pie data={byCategory} dataKey="amount" nameKey="cat" cx="50%" cy="50%" outerRadius={85} innerRadius={45}>
                       {byCategory.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                     </Pie>
-                    <Tooltip contentStyle={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, fontFamily: "DM Mono", fontSize: 12 }} formatter={v => [`₪${v.toLocaleString()}`, ""]} />
-                    <Legend formatter={(v) => <span style={{ fontSize: 11, color: "#9ca3af", fontFamily: "DM Mono" }}>{v}</span>} />
+                    <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 8, fontFamily: "Assistant", fontSize: 12 }} formatter={v => [`₪${v.toLocaleString()}`, ""]} />
+                    <Legend formatter={(v) => <span style={{ fontSize: 11, color: "#6b7a8d", fontFamily: "Assistant" }}>{v}</span>} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -544,19 +534,19 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
 
             {/* Top merchants */}
             <div className="panel" style={{ marginBottom: "1rem" }}>
-              <h3>Top Merchants</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={topMerchants} layout="vertical" barSize={14}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-                  <XAxis type="number" tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "DM Mono" }} tickFormatter={v=>`₪${(v/1000).toFixed(1)}k`} />
-                  <YAxis type="category" dataKey="name" width={140} tick={{ fill: "#e8eaf0", fontSize: 11, fontFamily: "DM Mono" }} />
+              <h3>בתי עסק מובילים</h3>
+              <ResponsiveContainer width="100%" height={260}>
+                <BarChart data={topMerchants} layout="vertical" barSize={14} margin={{ right: 16 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" horizontal={false} />
+                  <XAxis type="number" tick={{ fill: "#6b7a8d", fontSize: 11, fontFamily: "Assistant" }} tickFormatter={v=>`₪${(v/1000).toFixed(1)}k`} />
+                  <YAxis type="category" dataKey="name" width={220} tick={{ fill: "#1e2a3a", fontSize: 11, fontFamily: "Assistant" }} />
                   <Tooltip content={({ active, payload }) => {
                     if (!active || !payload?.length) return null;
                     const { name, exact } = payload[0].payload;
                     return (
-                      <div style={{ background: "#181c24", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, fontFamily: "DM Mono", fontSize: 12, padding: "0.5rem 0.75rem" }}>
-                        <p style={{ color: "#9ca3af", marginBottom: "0.25rem", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{name}</p>
-                        <p style={{ color: "#00e5c3" }}>₪{exact.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                      <div style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 8, fontFamily: "Assistant", fontSize: 12, padding: "0.5rem 0.75rem" }}>
+                        <p style={{ color: "#6b7a8d", marginBottom: "0.25rem", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{name}</p>
+                        <p style={{ color: "#3b9ee8" }}>₪{exact.toLocaleString("he-IL", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                       </div>
                     );
                   }} />
@@ -569,32 +559,32 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
 
             {/* Transactions table */}
             <div className="panel" style={{ marginBottom: "1rem" }}>
-              <h3>Transactions — {filtered.length} shown</h3>
+              <h3>עסקאות — {filtered.length} מוצגות</h3>
               <div className="filter-row">
-                <label>Month</label>
+                <label>חודש</label>
                 <select value={filterMonth} onChange={e => setFilterMonth(e.target.value)}>
                   {months.map(m => <option key={m}>{m}</option>)}
                 </select>
-                <label>Category</label>
+                <label>קטגוריה</label>
                 <select value={filterCat} onChange={e => setFilterCat(e.target.value)}>
                   {categories.map(c => <option key={c}>{c}</option>)}
                 </select>
-                <input placeholder="Search merchant..." value={search} onChange={e => setSearch(e.target.value)} />
+                <input placeholder="חיפוש בית עסק..." value={search} onChange={e => setSearch(e.target.value)} />
               </div>
               <div className="scroll-table">
                 <table className="tx-table">
                   <thead>
                     <tr>
-                      <th>Date</th>
-                      <th>Description</th>
-                      <th>Category</th>
-                      <th>Amount</th>
+                      <th>תאריך</th>
+                      <th>תיאור</th>
+                      <th>קטגוריה</th>
+                      <th>סכום</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.slice(0, 200).map((t, i) => (
                       <tr key={i}>
-                        <td style={{ fontFamily: "DM Mono", fontSize: "0.8rem", color: "#6b7280" }}>{t.dateStr}</td>
+                        <td style={{ fontFamily: "Assistant", fontSize: "0.8rem", color: "var(--muted)" }}>{t.dateStr}</td>
                         <td>{t.description}</td>
                         <td><span className="cat-badge">{t.category}</span></td>
                         <td><span className={`amount ${t.isCredit ? "credit" : "debit"}`}>{t.isCredit ? "+" : "-"}{fmt(t.amount)}<span className="tip">₪{t.amount.toFixed(2)}</span></span></td>
@@ -607,24 +597,24 @@ Be concise, friendly, and specific. Use ₪ for amounts.`;
 
             {/* AI Analysis */}
             <div className="ai-panel">
-              <h3>AI Financial Analysis</h3>
+              <h3>ניתוח פיננסי בינה מלאכותית</h3>
               <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", fontFamily: "'DM Mono', monospace", fontSize: "0.72rem", color: "var(--muted)", marginBottom: "0.4rem", letterSpacing: "0.08em" }}>
-                  ANTHROPIC API KEY — stored in browser memory only, never sent anywhere except Anthropic
+                <label style={{ display: "block", fontFamily: "'Assistant', monospace", fontSize: "0.72rem", color: "var(--muted)", marginBottom: "0.4rem", letterSpacing: "0.08em" }}>
+                  מפתח API של Anthropic — נשמר בזיכרון הדפדפן בלבד, לא נשלח לשום מקום מלבד Anthropic
                 </label>
                 <input
                   type="password"
                   placeholder="sk-ant-..."
                   value={apiKey}
                   onChange={e => setApiKey(e.target.value)}
-                  style={{ width: "100%", background: "var(--surface2)", border: "1px solid var(--border)", color: "var(--text)", padding: "0.5rem 0.75rem", borderRadius: 6, fontFamily: "'DM Mono', monospace", fontSize: "0.82rem" }}
+                  style={{ width: "100%", background: "var(--surface2)", border: "1px solid var(--border)", color: "var(--text)", padding: "0.5rem 0.75rem", borderRadius: 6, fontFamily: "'Assistant', monospace", fontSize: "0.82rem", direction: "ltr", textAlign: "left" }}
                 />
               </div>
-              {!apiKey && <p style={{ color: "var(--muted)", fontSize: "0.8rem", fontFamily: "'DM Mono', monospace", marginBottom: "0.75rem" }}>Get a free key at console.anthropic.com</p>}
-              {aiLoading && <div className="ai-loading"><div className="pulse" /> Analyzing your transactions...</div>}
+              {!apiKey && <p style={{ color: "var(--muted)", fontSize: "0.8rem", fontFamily: "'Assistant', monospace", marginBottom: "0.75rem" }}>קבל מפתח חינמי בכתובת console.anthropic.com</p>}
+              {aiLoading && <div className="ai-loading"><div className="pulse" /> מנתח את העסקאות שלך...</div>}
               {aiResponse && <div className="ai-response">{aiResponse}</div>}
               <button className="analyze-btn" onClick={runAI} disabled={aiLoading || !apiKey}>
-                {aiLoading ? "Analyzing..." : aiResponse ? "Re-analyze" : "✦ Analyze with AI"}
+                {aiLoading ? "מנתח..." : aiResponse ? "נתח מחדש" : "✦ נתח עם בינה מלאכותית"}
               </button>
             </div>
 
