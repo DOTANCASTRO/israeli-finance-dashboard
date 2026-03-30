@@ -376,6 +376,20 @@ export default function App() {
     return Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([name,amount])=>({name,amount:Math.round(amount),exact:+amount.toFixed(2)}));
   }, [filtered]);
 
+  // ── Export ────────────────────────────────────────────────────────────────
+  const exportToExcel = () => {
+    const rows = filtered.map(t => ({
+      תאריך: t.dateStr,
+      תיאור: t.description,
+      קטגוריה: t.category,
+      סכום: t.amount,
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "עסקאות");
+    XLSX.writeFile(wb, "עסקאות.xlsx");
+  };
+
   // ── AI Analysis ───────────────────────────────────────────────────────────
   const runAI = async () => {
     setAiLoading(true); setAiResponse("");
@@ -570,6 +584,7 @@ ${summary.monthlyTrend.map(m=>`- ${m.month}: ₪${m.amount}`).join("\n")}
                   {categories.map(c => <option key={c}>{c}</option>)}
                 </select>
                 <input placeholder="חיפוש בית עסק..." value={search} onChange={e => setSearch(e.target.value)} />
+                <button onClick={exportToExcel} style={{ marginRight: "auto" }}>ייצוא ל-Excel</button>
               </div>
               <div className="scroll-table">
                 <table className="tx-table">
